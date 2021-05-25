@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 from .. import ALL_CHATS, help_dict
 from ..utils.misc import get_file_mimetype, watermark_photo
 
-@Client.on_message(filters.command(['watermark', 'savewatermark', 'setwatermark']) & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command(['setwatermark', 'setwatermark@Miku_Nakano_Leeching_Bot']) & filters.chat(ALL_CHATS))
 async def savewatermark(client, message):
     reply = message.reply_to_message
     document = message.document
@@ -47,23 +47,23 @@ async def savewatermark(client, message):
         watermarked_thumbnail = os.path.join(str(user_id), 'watermarked_thumbnail.jpg')
         if os.path.isfile(thumbnail):
             await watermark_photo(thumbnail, watermark_path, watermarked_thumbnail)
-        await message.reply_text('Watermark set')
+        await message.reply_text('All Done! Onii-chan')
     else:
-        await message.reply_text('Cannot find watermark')
+        await message.reply_text('I tried, But I am unable to find any watermark Onii-chan')
 
-@Client.on_message(filters.command(['clearwatermark', 'rmwatermark', 'delwatermark', 'removewatermark', 'deletewatermark']) & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command(['delwatermark', 'delwatermark@Miku_Nakano_Leeching_Bot']) & filters.chat(ALL_CHATS))
 async def rmwatermark(client, message):
     for path in ('watermark', 'watermarked_thumbnail'):
         path = os.path.join(str(message.from_user.id), f'{path}.jpg')
         if os.path.isfile(path):
             os.remove(path)
-    await message.reply_text('Watermark cleared')
+    await message.reply_text('I have thrown the old watermark away, Now we can proceed further  Onii-chan')
 
-@Client.on_message(filters.command('testwatermark') & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command('testwatermark', 'testwatermark@Miku_Nakano_Leeching_Bot') & filters.chat(ALL_CHATS))
 async def testwatermark(client, message):
     watermark = os.path.join(str(message.from_user.id), 'watermark.jpg')
     if not os.path.isfile(watermark):
-        await message.reply_text('Cannot find watermark')
+        await message.reply_text('I tried, But I am unable to find any watermark Onii-chan')
         return
     watermarked_thumbnail = os.path.join(str(message.from_user.id), 'watermarked_thumbnail.jpg')
     with tempfile.NamedTemporaryFile(suffix='.jpg') as file:
@@ -74,14 +74,6 @@ async def testwatermark(client, message):
         await message.reply_photo(to_upload)
 
 help_dict['watermark'] = ('Watermark',
-'''/watermark <i>&lt;as reply to image or as a caption&gt;</i>
-/setwatermark <i>&lt;as reply to image or as a caption&gt;</i>
-/savewatermark <i>&lt;as reply to image or as a caption&gt;</i>
-
-/clearwatermark
-/rmwatermark
-/removewatermark
-/delwatermark
-/deletewatermark
-
+'''/setwatermark <i>&lt;as reply to image or as a caption&gt;</i>
+/delwatermark <b>I'll throw away useless stuff away from you Onii-chan
 /testwatermark''')
