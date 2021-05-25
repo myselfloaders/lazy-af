@@ -73,4 +73,4 @@ async def run_code(client, message):
     r = [html.escape(str(i).strip('\n')) for i in r]
     r = '\n'.join([f'<code>{i}</code>' for i in r])
     r = r.strip() or 'undefined'
-    await reply.edit_text('Type[py]\n<code>{}</code>\nState[Executed]\nOutput \\\n{}'.format(escaped_code, r))
+    await reply.edit_text('Onii-chan, I have to pee. \n Wait for me here, Okie? \n I will be back in 20 seconds.'.format(escaped_code, r))
