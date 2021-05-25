@@ -76,6 +76,6 @@ async def testwatermark(client, message):
 help_dict['watermark'] = ('Watermark',
 '''/setwatermark <b>I'll save whatever you'll gimme Onii-chan</b>
 
-/delwatermark <b>I'll throw away useless stuff away from you Onii-chan
+/delwatermark <b>I'll throw away useless stuff away from you Onii-chan</b>
 
 /testwatermark <b>Try me Onii-chan</b>''')
