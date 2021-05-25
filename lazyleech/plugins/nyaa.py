@@ -55,14 +55,14 @@ async def return_search(query, page=1, sukebei=False):
 
 message_info = dict()
 ignore = set()
-@Client.on_message(filters.command(['nyaa']))
+@Client.on_message(filters.command(['nyaa', 'nyaa@Miku_Nakano_Leeching_Bot']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
 
-@Client.on_message(filters.command(['horny']))
+@Client.on_message(filters.command(['horny', 'horny@Miku_Nakano_Leeching_Bot']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -134,4 +134,4 @@ async def nyaa_callback(client, callback_query):
 help_dict['nyaa'] = ('Nyaa.si',
 '''/nyaa <b>I will search Anime for you Onii-chan</b>
 
-/sts <b>Onii-chan is such a Pervet!</b>''')
+/horny <b>If Onii-chan uses this then, he is a Pervet!</b>''')
