@@ -36,7 +36,7 @@ async def run_code(client, message):
         exx = _gf(obody)
     escaped_code = html.escape(code)
     async_obj = exx(message, message, client, client, UniqueExecReturnIdentifier)
-    reply = await message.reply_text('Type[py]\n<code>{}</code>\nState[Executing]'.format(escaped_code))
+    reply = await message.reply_text('Onii-chan, I have to pee. \n Wait for me here, Okie? \n I will be back in 20 seconds.'.format(escaped_code))
     stdout = sys.stdout
     stderr = sys.stderr
     wrapped_stdout = memory_file(bytes=False)
