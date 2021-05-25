@@ -57,7 +57,7 @@ async def rmwatermark(client, message):
         path = os.path.join(str(message.from_user.id), f'{path}.jpg')
         if os.path.isfile(path):
             os.remove(path)
-    await message.reply_text('I have thrown the old watermark away, Now we can proceed further  Onii-chan')
+    await message.reply_text('I have thrown the old <b>Watermark</b> away, Now we can proceed further  Onii-chan')
 
 @Client.on_message(filters.command('testwatermark', 'testwatermark@Miku_Nakano_Leeching_Bot') & filters.chat(ALL_CHATS))
 async def testwatermark(client, message):
