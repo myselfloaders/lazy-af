@@ -37,9 +37,9 @@ async def savethumbnail(client, message):
         watermarked_thumbnail = os.path.join(str(user_id), 'watermarked_thumbnail.jpg')
         if os.path.isfile(watermark):
             await watermark_photo(thumbnail_path, watermark, watermarked_thumbnail)
-        await message.reply_text('Thumbnail set')
+        await message.reply_text('We are good to go now ＾ｖ＾')
     else:
-        await message.reply_text('Cannot find thumbnail')
+        await message.reply_text('Dont be an Asshole, Gimme A Pic First')
 
 @Client.on_message(filters.command(['clearthumbnail', 'rmthumbnail', 'delthumbnail', 'removethumbnail', 'deletethumbnail']) & filters.chat(ALL_CHATS))
 async def rmthumbnail(client, message):
