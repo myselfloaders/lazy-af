@@ -55,14 +55,14 @@ async def return_search(query, page=1, sukebei=False):
 
 message_info = dict()
 ignore = set()
-@Client.on_message(filters.command(['ts', 'nyaa', 'nyaasi']))
+@Client.on_message(filters.command(['nyaa']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
 
-@Client.on_message(filters.command(['sts', 'sukebei']))
+@Client.on_message(filters.command(['horny']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -72,7 +72,7 @@ async def nyaa_search_sukebei(client, message):
 async def init_search(client, message, query, sukebei):
     result, pages, ttl = await return_search(query, sukebei=sukebei)
     if not result:
-        await message.reply_text('No results found')
+        await message.reply_text('Try something that I understand Onii-chan. \n Or else I will Pow You')
     else:
         buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton('Next', 'nyaa_next')]
         if pages == 1:
@@ -108,7 +108,7 @@ async def nyaa_callback(client, callback_query):
             current_page = pages
         ttl_ended = (time.time() - ttl) > 3600
         if ttl_ended:
-            text = getattr(message.text, 'html', 'Search expired')
+            text = getattr(message.text, 'html', 'Stop Looking At My Old Stuff, Get A New One')
         else:
             if callback_query.from_user.id != user_id:
                 await callback_query.answer('...no', cache_time=3600)
@@ -116,7 +116,7 @@ async def nyaa_callback(client, callback_query):
             text, pages, ttl = await return_search(query, current_page, sukebei)
         buttons = [InlineKeyboardButton('Back', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton('Next', 'nyaa_next')]
         if ttl_ended:
-            buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
+            buttons = [InlineKeyboardButton('Stop Looking At My Old Stuff, Get A New One', 'nyaa_nop')]
         else:
             if current_page == 1:
                 buttons.pop(0)
@@ -132,9 +132,7 @@ async def nyaa_callback(client, callback_query):
     await callback_query.answer()
 
 help_dict['nyaa'] = ('Nyaa.si',
-'''/ts <i>[search query]</i>
-/nyaa <i>[search query]</i>
-/nyaasi <i>[search query]</i>
+'''/nyaa <i>[search query]</i>
 
 /sts <i>[search query]</i>
 /sukebei <i>[search query]</i>''')
