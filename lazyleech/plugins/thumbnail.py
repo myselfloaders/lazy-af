@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 from .. import ALL_CHATS, help_dict
 from ..utils.misc import convert_to_jpg, get_file_mimetype, watermark_photo
 
-@Client.on_message(filters.command(['thumbnail', 'savethumbnail', 'setthumbnail']) & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command(['setthumbnail', 'setthumbnail@Miku_Nakano_Leeching_Bot']) & filters.chat(ALL_CHATS))
 async def savethumbnail(client, message):
     reply = message.reply_to_message
     document = message.document
@@ -41,21 +41,15 @@ async def savethumbnail(client, message):
     else:
         await message.reply_text('Dont be an Asshole, Gimme A Pic First')
 
-@Client.on_message(filters.command(['clearthumbnail', 'rmthumbnail', 'delthumbnail', 'removethumbnail', 'deletethumbnail']) & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command(['delthumbnail', 'deletethumbnail@Miku_Nakano_Leeching_Bot']) & filters.chat(ALL_CHATS))
 async def rmthumbnail(client, message):
     for path in ('thumbnail', 'watermarked_thumbnail'):
         path = os.path.join(str(message.from_user.id), f'{path}.jpg')
         if os.path.isfile(path):
             os.remove(path)
-    await message.reply_text('Thumbnail cleared')
+    await message.reply_text('I have thrown the old <b>Thumbnail</b> away, Now we can proceed further Onii-chan')
 
 help_dict['thumbnail'] = ('Thumbnail',
-'''/thumbnail <i>&lt;as reply to image or as a caption&gt;</i>
-/setthumbnail <i>&lt;as reply to image or as a caption&gt;</i>
-/savethumbnail <i>&lt;as reply to image or as a caption&gt;</i>
+'''/setthumbnail <b>I'll set the Thumbnail to the files You're going to leech next Onii-chan</b>
 
-/clearthumbnail
-/rmthumbnail
-/removethumbnail
-/delthumbnail
-/deletethumbnail''')
+/delthumbnail <b>I'll throw away useless stuff away from you Onii-chan</b>''')
