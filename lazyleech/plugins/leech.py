@@ -179,9 +179,9 @@ async def initiate_directdl(client, message, link, filename, flags):
     try:
         gid = await asyncio.wait_for(aria2_add_directdl(session, user_id, link, filename, LEECH_TIMEOUT), MAGNET_TIMEOUT)
     except Aria2Error as ex:
-        await asyncio.gather(message.reply_text(f'Aria2 Error Occured!\n{ex.error_code}: {html.escape(ex.error_message)}'), reply.delete())
+        await asyncio.gather(message.reply_text(f'If this is a worker link,\nThen try 3-4 times again Onii-chan \n\nIf not, then the link sucks! \nFeed me something good Onii-chan, \nI believe the error must be this.{ex.error_code}: {html.escape(ex.error_message)}'), reply.delete())
     except asyncio.TimeoutError:
-        await asyncio.gather(message.reply_text('Connection timed out'), reply.delete())
+        await asyncio.gather(message.reply_text('This link is disgusting, \nYou Better Gimme something good Onii-chan, \nOr else I will tell this to Mommy'), reply.delete())
     else:
         await handle_leech(client, message, gid, reply, user_id, flags)
 
@@ -235,34 +235,34 @@ async def handle_leech(client, message, gid, reply, user_id, flags):
     if torrent_info['status'] == 'error':
         error_code = torrent_info['errorCode']
         error_message = torrent_info['errorMessage']
-        text = f'Aria2 Error Occured!\n{error_code}: {html.escape(error_message)}'
+        text = f'This Really Sucks! Eww!!\n{error_code}: {html.escape(error_message)}'
         if error_code == '7' and not error_message and torrent_info['downloadSpeed'] == '0':
-            text += '\n\nThis error may have been caused due to the torrent being too slow'
+            text += '\n\nThis torrent sucks Onii-chan'
         await asyncio.gather(
             message.reply_text(text),
             reply.delete()
         )
     elif torrent_info['status'] == 'removed':
         await asyncio.gather(
-            message.reply_text('Your download has been manually cancelled.'),
+            message.reply_text('I have cancelled your download Onii-chan'),
             reply.delete()
         )
     else:
         leech_statuses.pop(message_identifier)
         task = None
         if upload_queue._unfinished_tasks:
-            task = asyncio.create_task(reply.edit_text('Download successful, waiting for queue...'))
+            task = asyncio.create_task(reply.edit_text('Well, I am kinda busy with something else, \nPlease wait a little longer Onii-chan'))
         upload_queue.put_nowait((client, message, reply, torrent_info, user_id, flags))
         try:
             await aria2_remove(session, gid)
         except Aria2Error as ex:
-            if not (ex.error_code == 1 and ex.error_message == f'Active Download not found for GID#{gid}'):
+            if not (ex.error_code == 1 and ex.error_message == f'Dont be a dick Onii-chan, I cannot find anything with this GID#{gid}'):
                 raise
         finally:
             if task:
                 await task
 
-@Client.on_message(filters.command('list') & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command('list', 'list@Miku_Nakano_Leeching_Bot') & filters.chat(ALL_CHATS))
 async def list_leeches(client, message):
     user_id = message.from_user.id
     text = ''
@@ -288,10 +288,10 @@ async def list_leeches(client, message):
                 futtext = a
             text = futtext
     if not text:
-        text = 'No leeches by you found.'
+        text = 'Meoooow, Nothing is here Onii-chan'
     await message.reply_text(text, quote=quote)
 
-@Client.on_message(filters.command('cancel') & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command('cancel', 'cancel@Miku_Nakano_Leeching_Bot') & filters.chat(ALL_CHATS))
 async def cancel_leech(client, message):
     user_id = message.from_user.id
     gid = None
@@ -306,34 +306,34 @@ async def cancel_leech(client, message):
         if task:
             task, starter_id = task
             if message.chat.id not in ADMIN_CHATS and user_id != starter_id:
-                await message.reply_text('You did not start this leech.')
+                await message.reply_text('It is None of your business, Get the hell Out Of Here')
             else:
                 task.cancel()
             return
         result = progress_callback_data.get(reply_identifier)
         if result:
             if message.chat.id not in ADMIN_CHATS and user_id != result[3]:
-                await message.reply_text('You did not start this leech.')
+                await message.reply_text('It is None of your business, Get the hell Out Of Here')
             else:
                 stop_uploads.add(reply_identifier)
-                await message.reply_text('Cancelled!')
+                await message.reply_text('Alrighty!!')
             return
         starter_id = upload_waits.get(reply_identifier)
         if starter_id:
             if message.chat.id not in ADMIN_CHATS and user_id != starter_id[0]:
-                await message.reply_text('You did not start this leech.')
+                await message.reply_text('It is None of your business, Get the hell Out Of Here')
             else:
                 stop_uploads.add(reply_identifier)
-                await message.reply_text('Cancelled!')
+                await message.reply_text('Alrighty!!')
             return
         gid = leech_statuses.get(reply_identifier)
     if not gid:
         await message.reply_text('''Usage:
-/cancel <i>&lt;GID&gt;</i>
-/cancel <i>(as reply to status message)</i>''')
+/cancel <b>You can Copy-Paste the Gid from above.</b>
+/cancel <b>You Can reply to the progress bar a well.</b>''')
         return
     if message.chat.id not in ADMIN_CHATS and not is_gid_owner(user_id, gid):
-        await message.reply_text('You did not start this leech.')
+        await message.reply_text('It is None of your business, Get the hell Out Of Here')
         return
     await aria2_remove(session, gid)
 
