@@ -132,6 +132,6 @@ async def nyaa_callback(client, callback_query):
     await callback_query.answer()
 
 help_dict['nyaa'] = ('Nyaa.si',
-'''/nyaa <b>I will search Anime for you Onii-chan</b>
+'''/anime <b>I will search Anime for you Onii-chan</b>
 
-/horny <b>If Onii-chan uses this then, he is a Pervet!</b>''')
+/hentai <b>If Onii-chan uses this then, he is a Pervet!</b>''')
