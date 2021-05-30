@@ -217,12 +217,12 @@ async def handle_leech(client, message, gid, reply, user_id, flags):
         text = f'''{html.escape(tor_name)}
 <code>{html.escape(return_progress_string(completed_length, total_length))}</code>
 
-<b>GID:</b> <code>{gid}</code>
-<b>Status:</b> {status}
-<b>Total Size:</b> {formatted_total_length}
-<b>Downloaded Size:</b> {formatted_completed_length}
-<b>Download Speed:</b> {download_speed}
-<b>ETA:</b> {calculate_eta(completed_length, total_length, start_time)}'''
+<b>╭─⌊GID⌉:</b> <code>{gid}</code>
+<b>┣⊸⌊Status⌉</b> {status}
+<b>┣⊸⌊Total Size⌉</b> {formatted_total_length}
+<b>┣⊸⌊Downloaded Size⌉</b> {formatted_completed_length}
+<b>┣⊸⌊Download Speed⌉</b> {download_speed}
+<b>╰─⌊ETA⌉</b> {calculate_eta(completed_length, total_length, start_time)}'''
         if seeders is not None:
             text += f'\n<b>Seeders:</b> {seeders}'
         if peers is not None:
@@ -262,7 +262,7 @@ async def handle_leech(client, message, gid, reply, user_id, flags):
             if task:
                 await task
 
-@Client.on_message(filters.command('list', 'list@Miku_Nakano_Leeching_Bot') & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command(['list', 'list@Miku_Nakano_Leeching_Bot']) & filters.chat(ALL_CHATS))
 async def list_leeches(client, message):
     user_id = message.from_user.id
     text = ''
@@ -291,7 +291,7 @@ async def list_leeches(client, message):
         text = 'Meoooow, Nothing is here Onii-chan'
     await message.reply_text(text, quote=quote)
 
-@Client.on_message(filters.command('cancel', 'cancel@Miku_Nakano_Leeching_Bot') & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command(['cancel', 'cancel@Miku_Nakano_Leeching_Bot']) & filters.chat(ALL_CHATS))
 async def cancel_leech(client, message):
     user_id = message.from_user.id
     gid = None
