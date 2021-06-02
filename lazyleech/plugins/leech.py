@@ -219,9 +219,9 @@ async def handle_leech(client, message, gid, reply, user_id, flags):
 
 <b>╭─⌊GID⌉:</b> <code>{gid}</code>
 <b>┣⊸⌊Status⌉</b> {status}
-<b>┣⊸⌊Total Size⌉</b> {formatted_total_length}
-<b>┣⊸⌊Downloaded Size⌉</b> {formatted_completed_length}
-<b>┣⊸⌊Download Speed⌉</b> {download_speed}
+<b>┣⊸⌊Size⌉</b> {formatted_total_length}
+<b>┣⊸⌊Done⌉</b> {formatted_completed_length}
+<b>┣⊸⌊Speed⌉</b> {download_speed}
 <b>╰─⌊ETA⌉</b> {calculate_eta(completed_length, total_length, start_time)}'''
         if seeders is not None:
             text += f'\n<b>Seeders:</b> {seeders}'
