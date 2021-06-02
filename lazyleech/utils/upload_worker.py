@@ -237,10 +237,10 @@ async def progress_callback(current, total, client, reply, filename, user_id):
         text = f'''Uploading {html.escape(filename)}...
 <code>{html.escape(return_progress_string(current, total))}</code>
 
-<b>Total Size:</b> {format_bytes(total)}
-<b>Uploaded Size:</b> {format_bytes(current)}
-<b>Upload Speed:</b> {upload_speed}/s
-<b>ETA:</b> {calculate_eta(current, total, start_time)}'''
+<b>╭─⌊Size⌉</b> {format_bytes(total)}
+<b>┣⊸⌊Done⌉</b> {format_bytes(current)}
+<b>┣⊸⌊Speed⌉</b> {upload_speed}/s
+<b>╰─⌊ETA⌉</b> {calculate_eta(current, total, start_time)}'''
         if prevtext != text:
             await reply.edit_text(text)
             prevtext = text
