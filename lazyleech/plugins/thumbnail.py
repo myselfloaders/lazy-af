@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 from .. import ALL_CHATS, help_dict
 from ..utils.misc import convert_to_jpg, get_file_mimetype, watermark_photo
 
-@Client.on_message(filters.command(['setthumbnail', 'setthumbnail@Miku_Nakano_Leeching_Bot']) & filters.chat(ALL_CHATS))
+@Client.on_message(filters.command(['thumbnail', 'thumbnail@Miku_Nakano_Leeching_Bot']) & filters.chat(ALL_CHATS))
 async def savethumbnail(client, message):
     reply = message.reply_to_message
     document = message.document
@@ -37,7 +37,7 @@ async def savethumbnail(client, message):
         watermarked_thumbnail = os.path.join(str(user_id), 'watermarked_thumbnail.jpg')
         if os.path.isfile(watermark):
             await watermark_photo(thumbnail_path, watermark, watermarked_thumbnail)
-        await message.reply_text('We are good to go now ＾ｖ＾')
+        await message.reply_text('We are good to go now ^▽^')
     else:
         await message.reply_text('Dont be an Asshole, Gimme A Pic First')
 
