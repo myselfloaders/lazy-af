@@ -124,7 +124,7 @@ async def directdl_cmd(client, message):
     command = text.pop(0).lower()
     if 'zip' in command:
         flags = (SendAsZipFlag,)
-    elif 'file' in command:
+    elif 'doc' in command:
         flags = (ForceDocumentFlag,)
     else:
         flags = ()
